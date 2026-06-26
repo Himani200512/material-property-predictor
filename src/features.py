@@ -46,6 +46,25 @@ class MaterialFeatureEngineer:
 
         return pd.DataFrame(X_scaled, columns=self.feature_cols), y, self.feature_cols
 
+    def fit_transform(self, df: pd.DataFrame) -> tuple:
+        df = df.copy()
+
+        # Detect target
+        y = self._extract_target(df)
+
+        # Check if we have structure or composition
+        if 'structure' in df.columns:
+            # Extract composition string from structure
+            from pymatgen.core import Structure
+            df['composition'] = df['structure'].apply(
+                lambda s: str(s.composition) if isinstance(s, Structure) else str(s)
+            )
+
+        # Now use the existing composition-based featurization
+        X_scaled, _, feature_names = self.fit_transform_composition(df, 'composition')
+
+        return X_scaled, y, feature_names
+
     def transform_composition(self, df: pd.DataFrame,
                               composition_col: str = 'composition') -> np.ndarray:
         if not self._fitted:
