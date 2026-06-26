@@ -1,0 +1,32 @@
+# Virtual Environment
+venv/
+.env/
+.venv/
+ENV/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Data & Results (LARGE FILES)
+data/
+notebooks/data/
+results/
+src/data/
+src/results/
+*.csv
+*.joblib
+*.h5
+*.pkl
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
